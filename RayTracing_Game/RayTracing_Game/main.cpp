@@ -14,14 +14,25 @@ int main(int argc, char **argv)
 	{ 
 		return 1;
 	}
-
-	while(true)
+	
+	SDL_Event sdlevent;
+	bool running = true;
+	while(running)
 	{
-		SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 255, 0));
-		if(SDL_Flip(screen) == -1)
+		while(SDL_PollEvent(&sdlevent))
 		{
-			return 1;
+			switch(sdlevent.type)
+			{
+			case SDL_QUIT:
+				{
+					running = false;
+				}
+				break;
+			}
 		}
+		SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 0, 255));
+		SDL_Flip(screen);
+		SDL_Delay(20);
 	}
 
 	SDL_Quit();
